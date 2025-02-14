@@ -1,6 +1,6 @@
 # Define substitutions (optional but helps with versioning) 
 substitutions:
-  _DEPLOYMENT_NAME: 'hello-world'
+  _DEPLOYMENT_NAME: 'hello-world22'
   _IMAGE: 'asia-south1-docker.pkg.dev/pvt-stage/stage-repo/stage-project-image:v-1.0'
   _DC_CLUSTER: 'stage-2-cluster'
   #_DR_CLUSTER: 'gke-dr-cluster'
