@@ -1,81 +1,9 @@
-# Define substitutions (optional but helps with versioning) 
-substitutions:
-  _DEPLOYMENT_NAME: 'hello-world2234'
-  _IMAGE: 'asia-south1-docker.pkg.dev/pvt-stage/stage-repo/stage-project-image:v-1.0'
-  _DC_CLUSTER: 'stage-2-cluster'
-  #_DR_CLUSTER: 'gke-dr-cluster'
-
-# Specify the logs bucket to store build logs
-logsBucket: gs://cloud-build--pvt-log
-
 steps:
-  # Step 1: Debug Step - List files in the current build context
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo "Listing files in the current build context:"
-        ls -la
-        echo "Deployment Name: ${_DEPLOYMENT_NAME}"
-        echo "Image Name: ${_IMAGE}"
-
-  # Step 2: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${_IMAGE}', '.']
-  
-  # Step 3: Push the Docker image to Artifact Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${_IMAGE}']
-
-  # Step 4: Apply the initial deployment on the DC cluster if it doesn't exist
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - 'deployment.yaml'
-    env:
-      - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_DC_CLUSTER}'
-      - 'CLOUDSDK_CORE_PROJECT=pvt-stage-1'
-
-  # Step 5: Apply the initial deployment on the DR cluster if it doesn't exist
-  # - name: 'gcr.io/cloud-builders/kubectl'
-  #   args:
-  #     - 'apply'
-  #     - '-f'
-  #     - 'deployment.yaml'
-  #   env:
-  #     - 'CLOUDSDK_COMPUTE_REGION=asia-south2'
-  #     - 'CLOUDSDK_CONTAINER_CLUSTER=${_DR_CLUSTER}'
-
-# Step 6: Deploy the application to the DC cluster
-# - name: 'gcr.io/cloud-builders/kubectl'
-#   args:
-#     - 'set'
-#     - 'image'
-#     - 'deployment/${_DEPLOYMENT_NAME}'
-#     - '${_DEPLOYMENT_NAME}=${_IMAGE}'
-#   env:
-#     - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
-#     - 'CLOUDSDK_CONTAINER_CLUSTER=${_DC_CLUSTER}'
-
-# Step 7: Deploy the application to the DR cluster
-# - name: 'gcr.io/cloud-builders/kubectl'
-#   args:
-#     - 'set'
-#     - 'image'
-#     - 'deployment/${_DEPLOYMENT_NAME}'
-#     - '${_DEPLOYMENT_NAME}=${_IMAGE}'
-#   env:
-#     - 'CLOUDSDK_COMPUTE_REGION=asia-south2'
-#     - 'CLOUDSDK_CONTAINER_CLUSTER=${_DR_CLUSTER}'
-
-# Specify images to build
-images:
-  - '${_IMAGE}' 
-
-# Specify the worker pool configuration
+- name: "gcr.io/cloud-builders/kubectl"
+  args: ['get', 'nodes']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=asia-south1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=gke-cluster-1'
 #options:
- # pool:
- #   name: 'projects/pvt-stage/locations/asia-south1/workerPools/stage-private-pool'
+ # workerPool:
+    #'projects/pnb-uat/locations/asia-south1/workerPools/pnb-uat-pvt-pool'
