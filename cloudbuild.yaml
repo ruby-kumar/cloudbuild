@@ -76,6 +76,6 @@ images:
   - '${_IMAGE}' 
 
 # Specify the worker pool configuration
-options:
-  pool:
-    name: 'projects/pvt-stage/locations/asia-south1/workerPools/stage-private-pool'
+#options:
+ # pool:
+ #   name: 'projects/pvt-stage/locations/asia-south1/workerPools/stage-private-pool'
