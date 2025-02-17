@@ -1,9 +1,9 @@
 steps:
-- name: "gcr.io/cloud-builders/kubectl"
-  args: ['get', 'nodes']
-  env:
-  - 'CLOUDSDK_COMPUTE_REGION=asia-south1-a'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=gke-cluster-1'
-#options:
- # workerPool:
-    #'projects/pnb-uat/locations/asia-south1/workerPools/pnb-uat-pvt-pool'
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ['get', 'nodes']
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=asia-south1-a'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=gke-cluster'
+options:
+  workerPool:
+    name: 'projects/stage-1/locations/asia-south1/workerPools/worker-pool'
