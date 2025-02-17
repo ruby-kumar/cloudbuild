@@ -4,6 +4,6 @@ steps:
     env:
       - 'CLOUDSDK_COMPUTE_REGION=asia-south1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=gke-cluster'
-options:
-  workerPool:
-    name: 'projects/stage-1/locations/asia-south1/workerPools/worker-pool'
+#options:
+ # workerPool:
+  # name: 'projects/stage-1/locations/asia-south1/workerPools/worker-pool'
